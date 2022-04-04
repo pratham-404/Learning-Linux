@@ -1,0 +1,11 @@
+Screen                                                                
+  2 ctrl+a S / ctrl+a :split --> horizontal split                               
+  3 ctrl+a | / ctrl+a :split -v --> vertical split                              
+  4 ctrl+a tab / ctrl+a :focus --> tab through splits                           
+  5 ctrl+a X / ctrl+a :remove --> removes [cursor window]                       
+  6 ctrl+a c / ctrl+a :screen --> creates new window at the [cursor split]      
+  7                                                                             
+  8 toilet [number]                                                             
+  9 ping google                                                                 
+ 10                                                                             
+ 11 ctrl+a Q / ctrl+a :only --> closes every split apart from current split

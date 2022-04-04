@@ -1,0 +1,10 @@
+youtube --> https://www.youtube.com/results?search_query=_search_query_
+binge
+
+regex 
+curl 
+wget
+pup
+
+
+
