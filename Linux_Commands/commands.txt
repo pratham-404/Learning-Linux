@@ -1,0 +1,386 @@
+LINUX 
+====================================================================
+
+GUI --> graphical user interface
+
+CLI --> command line interface
+
+SHELL is a program that takes commands from the keyboard and gives them to OS to perform
+
+TERMINAL is a tool which could be used to pass SHELL commands. It is a program that opens a window and let us interact with the SHELL
+
+CTRL + ALT + t --> Opens up a terminal
+CTRL + d --> Closes a terminal
+
+FILE SYSTEM --> like all other other OS the files in linux are also arranged in hierarchical directory structure i.e tree like structure.
+everything in the linux system is located under root(/) directory
+cd / --> root directory
+sudo su - --> user to root
+su - username --> root to user
+
+Linux COMMANDS
+
+pwd COMMAND
+pwd --> present working dir 
+
+clear COMMAND
+clear --> clears the terminal
+
+reset COMMAND
+reset --> completely re-initialise the terminal
+
+ls COMMAND (ls [OPTIONS] [FILE])
+ls --> lists all files in pwd
+ls address --> lists all files in the dir of given address (both absolute and relative path are accepted)
+ls / --> lists all files in root dir
+ls ~ --> lists all files in home dir
+ls .. --> lists all files in parent dir of pwd
+ls -l --> lists all files in the pwd in list(long format) form
+first column in this form is rights of current user(login) followed - are group rights
+Ex -> drwxr-xr-x (dir, user rights --> read write execute, group rights --> read execute, other rights --> read execute) 
+ls -a --> lists all files(including hidden(Ex -> .bashrc)) in pwd
+ls -l -a == ls -a -l == ls -la == ls -al ( long format + including hidden )
+ls -S --> lists all files in sorted form by file-size in pwd 
+ls *.extension --> lists all extension files in the pwd (here * is a wildcard) 
+ls *.* --> lists all files (excluding dir) in pwd
+ls -d */ --> lists all directories in pwd
+ls > output.txt --> store output of command in file and if file is not created this creates a file as given and then store the output
+
+cd COMMAND (cd [dir])
+cd OR cd ~ --> changes pwd to current home dir
+cd / --> changes pwd to root dir
+cd .. --> changes pwd to parent dir 
+cd - --> changes pwd to previous working dir and also outputs the address of of previous working dir
+cd address --> changes pwd to dir of given address (both absolute and relative path are accepted)
+cd my\ dir OR cd 'my dir' OR cd "my dir" --> handling string names of dir for changing pwd to these dir
+
+cat COMMAND (cat [OPTIONS] [FILE])
+cat --> takes input and print's it back and to exit ctrl + d
+cat file --> print's data of file on the terminal
+cat file1 file2 --> print's data of file1 followed by file2 on terminal
+cat -b file --> adds line number to non-blank line and print's data of file on the teminal
+cat -n file --> adds line number to every line and print's data of file on the teminal
+cat -s file --> squeezes blank lines to a single blank line and print's the data of file on terminal
+cat -E file --> adds $ symbol on end of each line and print's data of file on terminal
+
+I/O redirection
+cat > file --> takes input from the terminal and re-writes the file
+cat file1 file2 > file3 --> output of "cat file1 file2" is re-written into file3
+errorcommand > file --> cannot take input as error occurs but re-writes the file to an empty file
+errorcommand 2> file --> take error message as the re-writes the file
+cat >> file --> takes input from the terminal and updates file
+cat file1 >> file2 -->  file2 is updated by the output of "cat file1" i.e file1
+
+Pipelining --> A pipe is a form of redirection (transfer of standard output to some other destination) that is used in Linux and other Unix-like operating systems to send the output of one command/program/process to another command/program/process for further processing.
+ls -lR | less --> executes ls -lR command and redirects the output to the less command
+
+
+mkdir COMMAND
+mkdir dir_name --> creates a new dir dir_name in pwd
+mkdir my\ dir
+mkdir dir1 dir2 ... --> creates new dir dir1, dir2, ... in pwd
+mkdir address/dir_name --> creates a new dir dir_name at address (address should exist before operation)
+mkdir -p address/dir_name OR mkdir --parents address/dir_name --> creates a new dir dir_name at address
+(-p OR --parents could create a complete tree structure if address does not exist previously)
+mkdir -p address/{dir1,dir2,...} --> creates multiple new dir named dir1, dir2, ... at address
+(don't add spaces after a comma in the list)
+ 
+rmdir & rm COMMAND
+rmdir dir_name --> deletes the dir_name dir from pwd 
+(if presemt in pwd, else it will show error)
+rmdir dir1 dir2 ... --> deletes dir dir1, dir2, ... in pwd (if they exists)
+rmdir address/dir_name --> deletes dir_name dir at address (address should exist before operation)
+rmdir -p a/b/c == rmdir a/b/c a/b a this could be verfied using [verbose tag] i.e rmdir -v a/b/c
+[parent tag] (should be used when subtrees have only one child and last one is empty)
+rmdir COMMAND cannot delete a non empty dir
+rm -r address/dir_name --> deletes all the contents of dir_name at address using reccursive flag[-r]
+
+cp COMMAND (cp [OPTIONS] [SOURCE] [DESTINATION])
+cp file1 file2 --> copies all content of file1 into file2
+(if file2 is not present previously it would create file2)
+(if file2 already have content it will be replaced with content of file1)
+cp file address --> copies file to address with same filename 
+(both absolute and relative paths are valid)
+cp file1 file2 ... address --> copies file1, file2, ... to address with same filenames
+cp -i file address --> copies file to address and prompts(interactive mode) asking whether to overwrite.
+cp -r dir1 dir2 --> copies all content of dir1 to dir2 (-r flag is for reccursive copying)
+(if dir2 is not present previously it would create dir2 which would contains content of dir1)
+(if dir2 already have content it will now contain a new dir1 copy along with previous content)
+ 
+mv COMMAND (mv [OPTIONS] [SOURCE] [DESTINATION])
+mv oldname_file newname_file --> renames the original filename to new filename
+mv file address --> moves the file to the given address (both absolute and relative)
+if file already exists in the given address the previous file gets overwritten or replaced by the new file.
+mv -i file address --> prompts user wheather to overwrite a file or not
+mv dir1 addrees --> moves the dir to the given address
+mv dir1 dir2 --> if dir2 does not exits in pwd it will rename the dir1 to dir2
+mv -v dir1 address --> can be used to determine the backgroung processes executed due to the command
+mv -f dir address
+ 
+less COMMAND
+less file --> shows content of a file in an editor like view from start and could be easily handled using different keys like 
+	arrow-keys for navigation, 
+	space-bar for navigationg to next page,
+ 	B for navigating to previous page,
+ 	G for navigating to the end of the file,
+ 	g for navigating to the start of the file,
+ 	/word finds the word in the file from up to down, and to goto next occurence you can use n key
+ 	?word finds the word in the file from down to up, and to goto next occurence you can use n key
+ 	q to quit less command
+ 	
+touch COMMAND
+touch file --> create a new file in pwd
+and if file already exist it will modify time-stamp of the file to current time
+ 
+nano COMMAND
+nano file --> creates file if it does not exists and then opens the file in an interactive text editor in the shell prompt itself
+
+sudo COMMAND --> super user do (gives access to current user as the administrator/super-user)
+sudo [COMMAND] --> prompts for the password of the current user and the gives administrative priviledges 
+one initiated it give the user privileges to the user until the termination of the terminal [current session]
+sudo -s --> changes current user to root user(i. super-user)
+su username --> changes user from current user to given username
+
+top COMMAND
+top --> gives the current running processes in a tabular form of PID(process ID), USER, %CPU, %MEM, etc.
+	s key to change delay
+	i key to list out idle processes
+	k key takes PID and kill the following process
+	q to quit
+	
+kill COMMAND
+pidof process --> gives PID of the process
+kill PID --> kills the process with given PID
+kill -KILL PID --> kills process force-fully with givrn PID
+kill -9 PID --> more powerfull than -KILL flag
+ps -ux --> lists out all the running processes(current user) along with their PID in the shell itself
+ps -aux --> lists out all the running processes(all users)
+ps -U username --> lists out all the running processes of given username
+ps -C process_name --> gives the instance of the process_name from the ps list
+
+echo COMMAND
+echo text --> displays the text as an output
+echo "text" --> good practice 
+
+myvar="Pratham"
+echo "$myvar"
+
+x=10
+echo "value of x is $x"
+ 
+echo "line1\nline2" --> line1\nline2
+echo -e "line1\nline2" --> line1
+						   line2
+						 
+echo "word1\tword2" --> word1\tword2
+echo "word1\tword2" --> word1	word2
+
+FILE Permissions, SYMBOLIC Permissions, chmod COMMAND
+
+drwxrwxr-x --> first letter d --> directory file
+-rw-rw-r-- --> first letter - --> normal file
+
+next to this there is a numbeer which denotes number of symbolic links to the file
+next is owner of the file
+next is group owner of the file
+next is size of the file
+next is the date and time - stamp
+
+chmod COMMAND --> used to change the permission given to the file
+chmod o[+r, +w, +x, -r, -w, -x] file --> to change permissions of other users
+chmod g[+r, +w, +x, -r, -w, -x] file --> to change permissions of group owner
+chmod u[+r, +w, +x, -r, -w, -x] file --> to change permissions of owner(root user)
+chmod ug=rwx file --> gives all permissions to both owner and group-owner
+chmod a-rwx file == chmod ugo-rwx file --> removes all permissions from the owner, group-owner and others
+chmod u+rwx, g+rw, o+r file --> giving multiple permissions at a time
+
+DIR Permissions, chmod COMMAND
+chmod o[+r, +w, +x, -r, -w, -x] dir --> to change permissions of other users
+chmod g[+r, +w, +x, -r, -w, -x] dir --> to change permissions of group owner
+chmod u[+r, +w, +x, -r, -w, -x] dir --> to change permissions of owner(root user)
+ 
+OCTAL/NUMERICAL Permissions in chmod COMMAND
+users		group		others
+r w x		r w x		r w	x
+1 1 1		1 0 1		0 0 1
+4 2 1		4 2 1		4 2 1
+4+2+1		4+0+1		0+0+1
+7			5			1
+
+	  Octal		   Binary
+---		0			000
+--x		1			001
+-w-		2			010
+-wx		3			011
+r--		4			100
+r-x		5			101
+rw-		6			110
+rwx 	7			111
+
+chmod 543 --> user=5(r-x), group=4(r--), others=3(-wx)
+
+Basic SHELL Scripting(*.sh files)
+which bash --> for getting address of terminal
+
+nano sript.sh
+now the first line should be #![output of {which bash}]
+then write the script
+
+which & whatis COMMAND
+which [COMMAND] --> gives the location of the executable file of the command
+man [COMMAND] --> gives the complete documentation of the command in a new window at the terminal
+whatis [COMMAND] --> gives one line description of the command in terminal itself
+ 
+useradd COMMAND
+sudo useradd user_name -m -s /usr/bin/bash -g users -c "my-comment"
+-m --> creates a default home directory named as the user_name
+-s --> for shell and followed vy default shell(bash) address
+-g --> for group and followed by default group(users)
+-c --> for comment
+sudo passwd user_name
+
+userdel COMMAND
+sudo userdel user_name --> deletes user-name & password of the user(but does not delete home directory of user_name)
+sudo rm -r /home/user_name --> delete the home dir of the user
+sudo userdel -r user_name --> deletes the user_name, password and the home dir of the user
+
+Basics of GROUP Management
+groups --> gives the list of all groups connected to current_user 
+cat /etc/group --> gives the list of all groups present in the operating system
+sudo groupadd group_name --> creates a new group named as group_name (can be verified from {cat /etc/group})
+sudo groupdel group_name --> deletes the group from operating system (can be verified from {cat /etc/group})
+sudo gpasswd -a user_name group_name --> add user to the group 
+sudo gpasswd -d user_name group_name --> deletes user from the group 
+
+.bashrc FILE
+gedit file --> opens the file in a GUI editor
+
+Viewing Resources
+df --> outputst file system disk space usage [bytes]
+df -h --> df command in human readable form [i. G, M, K] 
+du --> estimates the storage used for pwd [bytes]
+du -h --> du command in human readable form [i. G, M, K] 
+du -sh --> directly results the storage used by pwd
+free --> displays total memory free and used in both physical and swap memory as well as buffer used by the kernel [bytes]
+free -h -->  free command in human readable form [i. G, M, K]
+free [-k, -m, -g, -tebi, -kilo, -mega, -giga, -peta] --> free command in 
+(kibibytes, mebibytes, gebibytes, tebibytes, kilobytes, megabytes, gigabytes, terabytes) 
+
+watch COMMAND
+watch COMMAND --> this can run a command at regual interval [by default 2 sec] or reapeatedly(ctrl+c to quit)
+watch -n freq COMMAND --> to change the the frequency of interval
+
+head and tail COMMAND
+head file --> used to output top part of a file (by default -> first 10 lines of the file)
+head file1 file2 ... -> outputs first 10 lines of all the files
+head -n num file --> show the first num lines of the file
+-n num == -nnum == -num
+tail file --> used to output bottom part of a file (by default -> last 10 lines of the file)
+head file1 file2 ... -> outputs last 10 lines of all the files
+tail -n num file --> show the last num lines of the file
+tail -f file --> output appended data as file grows [Could be used to check live output of the file]
+
+find COMMAND
+find -name file_name.ext --> finds the file_name.ext in pwd
+find address -name file_name.ext --> finds the file_name.ext at the given address
+find address -name file_name.* --> finds all the files in given dir which have file_name as name irrespective of their extensions
+find adddress *.ext --> finds all the files at the given address with extension as .ext irrespective of their file_names
+
+wc COMMAND --> counts number of characters, words, lines, bytes for each input file
+wc file --> gives no. of lines, no. of words, no. of charaacters in the file along with file_name as the output
+wc -c file --> gives no. of characters in the file along with file_name as the output
+wc -w file --> gives no. of words in the file along with file_name as the output
+wc -l file --> gives no. of lines in the file along with file_name as the output
+wc -L file --> gives no. of characters in the longest line in the file along with file_name as the output
+
+cal COMMAND
+cal ---> gives calendar of current month (days are aligned horizontally)
+ncal --> gives calendar of current month (days are aligned vertically)
+cal year --> gives the complete calendar of the given year
+cal month year --> gives calendar of given month in the given year
+
+date COMMAND
+date --> gives the day, date, and the current time of the system
+date -s "dd/mm/yyyy hour:min:sec" --> set date and time to given date and time
+date "+%d/%m/%y" --> gives the date in the given format
+date "+%d %h 20%y" --> gives the date in the given format
+date "+DATE: %m/%d/%y%nTIME: %H:%M:%S"
+
+How to run multiple commands in a terminal at a time
+; --> runs every sommand regardless of success and failure of commands
+cal ; date ; ls --> executed in order from left to right
+&& --> stops executing if a command throws an error
+cal && date && ls --> executed in order from left to right
+|| --> executes left and if no error is encountered it terminates
+but if encountered an error it shifts to the right and this works in a loop untill a command gives no error
+cal || DATE || ls;
+DATE || DATE || ls;
+
+apt-get COMMAND [apt --> advanced packaging tool] for debian based operating system [stored locally /usr/bin/apt-get]
+sudo apt-get update --> resyncronizes local index of package file compared to the remote server
+sudo apt-get upgrade --> upgrades the package file that could be updated
+sudo apt-get install software/package/utility --> used to install different sotwares, packages, utilities, etc from the remote server using th apt package manager
+sudo apt-get remove software/package/utility --> used to uninstall different sotwares, packages, utilities, etc from the system
+sudo apt-get remove --purge software/package/utility --> used to uninstall an well as remove configuration files of different softwares, packages, utilities, etc from the system
+sudo apt-get autoremove software/packages/utilities --> removes the packages/software/utitlities which were automaticallly installed for satisfing dependency of another program but are no longer required
+
+ifconfig COMMAND
+ifconfig -->
+sudo ifconfig ens33 down -->
+sudo ifconfig ens33 up --> 
+
+tar COMMAND --> used to create, maintain, modify, and extract files which are archived in the tar(tapped archive) format.
+tar -cvf tar_name.tar dir --> -c to creating an archive[compression],
+							  -v to verbose(i.e to show the step by step processes that are executed due to the command)
+							  -f to name of the tar file that is being created
+							  followed by the address of the dir that needs to be compressed
+tar -czvf tar_name.tar.gz dir --> here -z flag is used to compress the dir into .tar.gz extension archive.						  
+tar -xvf tar_name.tar --> -x to extracting an archive[extraction],
+						  -v to verbose(i.e to show the step by step processes that are executed due to the command)
+						  -f to name of the tar file that is being extracted
+tar -xzvf tar_name.tar.gz --> here -z flag is used to extract the .tar.gz extension archive.
+
+grep COMMAND(global regular expression print)
+grep command processes text line by line and print any line which matches a specified pattern
+hence could be used to seach some kind of pattern, word, or sentence in a file or a number of files with grep command along with some options with grep command.
+
+grep "word" file.txt --> outputs the line which contains following word from the file(case-sensitive)
+grep -i "word" file.txt --> outputs the line which contains following word from the file(case-insensitive)
+grep -n "word" file.txt --> even shows the line no. of the occurence of the word in the file
+grep "this is a sentence" file.txt --> outputs the line which contain following sentence in the file
+grep "word/sentence" file1.txt file2.txt ... --> outputs the line which contains following word/sentence for all the files given as input
+grep "word/sentence" * --> outputs the line which contains following word/sentence for all the files in the pwd
+grep -v "word/sentence" --> outputs the line which does not contains following word/secntence from the file
+grep --help --> gives the manual of different options of grep command
+
+netstat COMMAND (network statistics) --> command to display network connections, routing tables, interface statistics and even can be used to view network protocol statistics
+netstat -a --> displays all the connections(tcp, udp, unix-connetions, etc) that are available on the system
+netstat -a | less --> to view in a new window and supports navigation through arrow keys
+netstat -at | less --> displays only tcp connections
+netstat -au | less --> displays only udp connections
+netstat -l | less --> displays the ports that are in LISTENING state
+netstat -lt | less --> displays only tcp connections that are in LISTENING state
+netstat -lu | less --> displays only udp connections that are in LISTENING state
+netstat -s | less --> displays summary statistics for each type of network connections
+netstat -st | less --> displays summary statistics for tcp connections
+netstat -su | less --> displays summary statistics for udp connections
+netstat -p | less --> displays the PID of the and name of the program to which each connection belongs
+netstat -p | less --> displays the numeric addresses(INODE) of each connection
+netstat -c --> displays it continuously (i.e refreshes/updates after an interval)
+netstat -ie == ifconfig 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

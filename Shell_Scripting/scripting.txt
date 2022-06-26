@@ -1,0 +1,295 @@
+bash shell scripting 
+
+unix shell program interpretes user commands which are either directly interpreted by users and can be read by a file called as shell script or shell program
+
+shell scripts are INTERPRETED not COMPILED. --> IMP
+
+cat /etc/shells --> gives the list of various shells in the OS
+
+sh --> bourne shells (used in UNIX)
+bash --> bourne again shell [bash] --> Standard GNU shell which is intutive and flexible
+
+which bash --> gives the location where bash shell is present
+sleep 1 --> terminal waits of 1 sec
+
+File 1 (hello.sh)
+touch hello.sh --> creating a shell file but here .sh extension is not compulsory[but it is better to use .sh]
+code . --> to open folder in VSCODE [looks better]
+
+#! /usr/bin/bash --> #!(hash-bang/shbang) --> start of every shell script so that terminal knows that it is a bash script(if address is given of bash) respectively
+echo "Hello, World" --> prints the given text on the terminal
+save the file
+
+coming back on terminal
+chmod +x hello.sh --> gives executable permission to the hello.sh
+./hello.sh --> now it runs smooth as butter and gives corresponding output
+
+bash -x ./script.sh --> shows the verbose i.e what happens in the background during script execution [Debugging Scripts] 
+                        could even be executed by ./script.sh if we add -x to the end of first line of script i.e address of bash(which bash)
+set -x --> should be used in the script from where you want to start debugging
+set +x --> should be used in the script from where you want to end debugging
+
+File 2 (variable.sh)
+Variables of two types:
+    1) System Variables --> created and maintained by OS
+                        --> These are mostly pre-defined into the OS generally in UPPERCASE/CAPTITALIZED
+    2) User defined Variables --> maintained by user and generally in LOWERCASE
+                              --> variable name should not start with a numeric digit
+
+File 3 (input.sh)
+read COMMAND --> gets input from the user and assigns it to a variable
+        
+        -p --> prints out the line and takes input in the same line
+        -s --> takes silent input i.e for passwords
+        -a --> for storing values in an array [File 4 (array.sh)]
+        if no variable is assigned to read command then by default it is stored in $REPLY variable
+
+File 5 (arguments.sh)
+Passing arguments to a bash script
+
+        $0 --> assigne to the bash filename
+        $1, $2, $3, ... --> are assigned to the arguments that are taken as an inputs in the order of inputs (1 indexed)
+        $@ --> outputs all the inputs in one go
+        arr=("#@") --> parses the inputs into an array (0 indexed)
+        $# --> gives number of arguments passed 
+        $$ --> gives the pid of the script
+
+File 6 (conditional.sh)
+
+integer comparison
+    -eq --> equal to [ "$a" -eq "$b" ]
+    -nq --> not equal to [ "$a" -nq "$b" ]
+    -gt / > --> greater than [ "$a" -gt "$b" ] / (( "$a" > "$b" ))
+    -ge / >= --> greater than or equal to [ "$a" -ge "$b" ] / (( "$a" >= "$b" ))
+    -lt / < --> less than [ "$a" -lt "$b" ] / (( "$a" < "$b" ))
+    -le / <= --> less than or equal to [ "$a" -le "$b" ] / (( "$a" <= "$b" ))
+
+string comparison
+    = / == --> equal to [ "$a" = "$b" ] / [ "$a" == "$b" ]
+    != --> not equal to [ "$a" != "$b" ]
+    < --> is less than in ASCII alpabetical order [[ "$a" < "$b" ]]
+    > --> is greater than in ASCII alpabetical order [[ "$a" > "$b" ]]
+    -z --> string is null, that is, has zero length
+
+Very Case Sensitive, even space count !!!
+
+if Statements
+SYNTAX:
+    if [ Condition ]
+    then
+        statement
+    fi
+
+if-else Statements
+SYNTAX:
+    if [ Condition ]
+    then
+        statement
+    else 
+        statement
+    fi
+
+if-else-if Statements
+SYNTAX:
+    if [ Condition ]
+    then
+        statement
+    elif [ Condition ] 
+    then
+        statement
+    else 
+        statement
+    fi
+
+File 7 (filetest.sh)
+File Test Operators
+    -e --> to verify if file exist or not [ -e $file_name ] 
+    -f --> to verify wheather file exist and it is regular text-file [ -f $file_name ] 
+    -b --> to verify if a block special file(i.e images, videos, etc.) exist [ -b $file_name ] 
+    -c --> to verify if a character special file(i.e file that contains data) exist [ -c $file_name ] 
+    -s --> to verify if a file is empty or not [ -s $file_name ]
+    -r , -w, -x --> to check wheather a file has read write and execute permissions [ -r $file_name ]/[ -w $file_name ]/[ -x $file_name ] 
+    -d --> to verify if directory exist or not [ -d $dir_name ]
+
+File 8 (append.sh)
+append output to the end of the text file ( application of nested if and file-test operators )
+
+File 9 (bool.sh)
+Boolean Operators
+    AND operator --> [ Condition1 ] && [ Condition2 ] / [ Condition1 -a Condition2 ] / [[ Condition1 && Condition2 ]]
+    OR operator  --> [ Condition1 ] || [ Condition2 ] / [ Condition1 -o Condition2 ] / [[ Condition1 || Condition2 ]]
+
+File 10 (arithmetic.sh)
+Arithmetic Operators(for INTEGERS)
+    + --> $((var1 + var2)) / $(expr $var1 + $var2))
+    - --> $((var1 - var2)) / $(expr $var1 - $var2))
+    * --> $((var1 * var2)) / $(expr $var1 \* $var2)) --> IMP
+    / --> $((var1 / var2)) / $(expr $var1 / $var2))
+    % --> $((var1 % var2)) / $(expr $var1 % $var2))
+
+--> throws error for floating point numbers
+        --> syntax error: invalid arithmetic operator (error token is ".line_no")
+        --> expr: non-integer argument
+
+Floating point Operators (bc command) File 11 (bc.sh)
+bc COMMAND (basic calculator) --> takes floating point expression as input and gives corresponding floating point output
+    + --> "$var1 + $var2" | bc
+    - --> "$var1 - $var2" | bc
+    * --> "$var1 * $var2" | bc
+    / --> "$var1 / $var2" | bc
+
+    "scale=5;$var1 / $var2" | bc --> gives output upto 5 decimal places
+
+File 12 (case.sh)
+case statement are good alternative for multilevel if-elif statements
+SYNTAX:
+    case expression in 
+        pattern 1 )
+            statements;;
+        pattern 2 )
+            statements;;
+        ...
+        ...
+        * ) # default case
+            statements;;
+    esac
+
+File 13 (array_var.sh)
+bash supports simple one dimentional array
+
+File 14 (while.sh)
+while loops
+SYNTAX
+    while [ condition ]
+    do
+        command1
+        command2
+        command3
+        ...
+    done
+
+
+File 15 (read.sh)
+Reading file content in bash
+
+1) using while loop and input-redirection 
+2) using pipes 
+3) using IFS( Internal Field Separator) 
+
+File 16 (until.sh)
+until loop --> almost similar to while loops but with a slight difference that if the condition is FALSE then an until loop is executed
+
+SYNTAX
+    until [ condition ]
+    do
+        command1
+        command2
+        command3
+        ...
+    done
+
+File 17 (for.sh)
+for loop
+
+SYNTAX
+    for VARIABLE in 1 2 3 4 5 .. N
+    do
+        command1
+        command2
+        ...
+    done
+
+    {START..END..INCREMENT}
+    for VARIABLE in {1..10..2}
+    do
+        command1
+        command2
+        ...
+    done
+
+    (( i=1;i<=5;i++ ))
+    for (( EXP1; EXP2; EXP3 ))
+    do
+        command1
+        command2
+        ...
+    done
+
+    for OUTPUT in (Linux-Or-Unix-Command-Here)
+    do
+        command1 on $OUTPUT
+        command2 on $OUTPUT
+        ...
+    done
+
+    for VARIABLE in file1 file2 file3
+    do
+        command1 on $VARIABLE
+        command2
+        ...
+    done
+
+File 18 (select.sh)
+select loop
+
+SYNTAX
+    select var in ele1 ele2 ele3 ...
+    do
+        # Use switch case for following elements of list
+        case $var in 
+            ele1 )
+                statements;;
+            ele2 )
+                statements;;
+            ...
+            ...
+            * ) # default case
+                statements;;
+        esac
+    done
+
+File 19 (break_continue.sh)
+
+File 20 (function.sh)
+function is a subroutine or a codeblock that impelements a set of operations
+
+SYNTAX
+    function name(){
+        COMMANDS
+    }
+
+    name(){
+        COMMANDS
+    }
+
+local keyword
+readonly keyword
+
+File 21 (trap.sh)
+
+ctrl + c --> termination (SIGINT)
+ctrl + z --> suspension (SIGTSTP)
+
+kill -l --> to list all the signals
+man 7 signal --> to veiw defination of each signal
+kill [-signal] PID
+     -9 --> SIGKILL
+
+And hence we use trap commands in order to capture an intrupts
+
+trap command provides a script to capture an intrupt and then clean it up within the script
+
+trap cannot catch SIGKILL and SIGSTOP commands
+
+
+
+
+    
+
+
+
+
+
+
+
+
