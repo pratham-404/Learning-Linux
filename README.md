@@ -24,3 +24,6 @@ The [Shell_Scripting](https://github.com/pratham-404/Learning-Linux/tree/main/Sh
 
 The [Lab_Assignments](https://github.com/pratham-404/Learning-Linux/tree/main/Lab_Assignments) directory contains the lab assignments that I completed during the semester. These assignments include tasks such as writing shell scripts to perform specific tasks, writing command-line programs, and configuring various aspects of the Linux operating system. Each assignment is accompanied by a brief description of the task and the expected output.
 
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
